@@ -40,8 +40,8 @@
        (dorun (text! (select (to-root e) [:#inputfilename]) (.getName fd))
               (text! (select (to-root e) [:#inputfilecontents]) fd)
               (text! (select (to-root e) [:#outputtextbox])
-                     (str (string/join "¥¥¥n" (rw/encode fd))
-                          "¥¥¥n")))))))
+                     (str (string/join "\\\n" (rw/encode fd))
+                          "\\\n")))))))
 
 (def outputfile-action
   (action
