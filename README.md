@@ -1,64 +1,64 @@
-skkime ���W�X�g���G���g���쐬�c�[��(skkime_kana_reg_editor)
+skkime レジストリエントリ作成ツール(skkime_kana_reg_editor)
 ==================================================
 
-IME�Ƃ���[SKKIME](http://homepage3.nifty.com/monjya/skkime.jis.html)���g���Ă��܂��B
-����ɁAdvorak�z��̃��[�U�[�Ȃ̂œ��͂ɂ�[DvorakJP](http://www7.plala.or.jp/dvorakjp/)���g���Ă��܂��B
+IMEとして[SKKIME](http://homepage3.nifty.com/monjya/skkime.jis.html)を使っています。
+さらに、dvorak配列のユーザーなので入力には[DvorakJP](http://www7.plala.or.jp/dvorakjp/)を使っています。
 
-SKKIME�Ȃ�A���[�}���ݒ���������Ă�����΂�����DvorakJP���g�����Ƃ��ł���̂ł����A
-���ׂĂ̒ǉ��ݒ��GUI�̉�ʂ�1������Ȃ��Ă͂Ȃ炸�A�ƂĂ�����Ȃ����ǂ���Ă��܂���B
-���΂炭k->c�ύX�ƝX���Ή�(h��n�Ɋ��肠��)�Ŏg���Ă܂������A�ӂƁA��d�ꉹ����肽���Ȃ��āA
-�c�[�������Ă݂܂����B
+SKKIMEなら、ローマ字設定をついかしてあげればちゃんとDvorakJPを使うことができるのですが、
+すべての追加設定をGUIの画面で1つずつ入れなくてはならず、とてもじゃないけどやってられません。
+しばらくk->c変更と拗音対応(hやnに割りあて)で使ってましたが、ふと、二重母音もやりたくなって、
+ツール化してみました。
 
-## ��@
-���[�}���ݒ�́A���W�X�g���ɓ����Ă��܂��B
-���̃��W�X�g�����G�N�X�|�[�g���āA�K�v�Ȑݒ��ǉ��������̂��C���|�[�g���܂��B
+## 手法
+ローマ字設定は、レジストリに入っています。
+このレジストリをエクスポートして、必要な設定を追加したものをインポートします。
 
-## �g������
-�ǂ�ŉ��̂��Ƃ�����Ȃ��l�͖������Ă���Ă͂����܂�B���W�X�g�����C���������Ȃ���
-�ň��̏ꍇWindows������������Ȃ��Ȃ�܂��B
+## 使いかた
+読んで何のことか分らない人は無理してやってはいけまん。レジストリを修正しそこなうと
+最悪の場合Windowsが立ちあがらなくなります。
 
-�菇�ɂ͈��S�̂��߂̎菇�͋L�ڂ��Ă���܂���B
+手順には安全のための手順は記載してありません。
 
-�K�v�ȃo�b�N�A�b�v�Ȃǂ͓K�X����Ă��������B
+必要なバックアップなどは適宜取ってください。
 
 
--    �l�^�����܂��B
-     �l�^�̃t�H�[�}�b�g��1�s��1�G���g���ŁA�u|�v�L���ŋ�؂�܂��B
+-    ネタを作ります。
+     ネタのフォーマットは1行に1エントリで、「|」記号で区切ります。
 
-     <�ϊ��Ώ�>|<�Ђ炪��>|<�J�^�J�i>|<�ϊ���Ɏc�����>
+     <変換対象>|<ひらがな>|<カタカナ>|<変換後に残るもの>
 
-     �̂悤�ȃt�H�[�}�b�g�ł��B
-     ���Ƃ��΁A
+     のようなフォーマットです。
+     たとえば、
 
-     cq|����|�R��|-
+     cq|こん|コン|-
 
-     �Ƃ���΁A�ucq�v�ƃ^�C�v�����Ƃ��ɁA�u����v�Ɠ��͂����Ƃ�����ł��B
-     �T���v���ɂ���uhenkan_table_ann.txt�v�́A����������d�ꉹ�̂��߂̃��X�g�ł��B
+     とすれば、「cq」とタイプしたときに、「こん」と入力されるという具合です。
+     サンプルにある「henkan_table_ann.txt」は、今回作った二重母音のためのリストです。
 
--   ���W�X�g�����G�N�X�|�[�g���܂��B
-    �K�v�Ȃ̂́A
+-   レジストリをエクスポートします。
+    必要なのは、
 
     HKEY_CURRENT_USER\Software\TT\Windows\CurrentVersion\SKKIME\1.5\Generic
 
-    �ł��B
-    �C������̂́A�uRomaKanaRule�v�̃G���g���ł��B
+    です。
+    修正するのは、「RomaKanaRule」のエントリです。
 
--   �c�[�����g���ĕϊ����܂��B
-    Input file �̃{�^���ŁA�l�^���w�肷��ƁA�l�^�̓��e�ƕϊ����ʂ��\������܂��B
+-   ツールを使って変換します。
+    Input file のボタンで、ネタを指定すると、ネタの内容と変換結果が表示されます。
 
-    Output file �ŏo�̓t�@�C�����w�肷��ƁA�ϊ����ʂ����t�@�C���ɕۑ����Ă������Ƃ��ł��܂��B
+    Output file で出力ファイルを指定すると、変換結果がをファイルに保存しておくことができます。
 
--   �G�N�X�|�[�g�������̂��C�����܂��B
-    RomaKanaRule�̃G���g���̐擪�ɁA�ϊ����ʂœ���ꂽ���̂�ǉ����܂��B
+-   エクスポートしたものを修正します。
+    RomaKanaRuleのエントリの先頭に、変換結果で得られたものを追加します。
 
-    �y���Ӂz�s���p�������邽�߂ɕt���Ă���A�Ō�́u\�v�����ׂĂ̍s�ɕt���Ă��邱�Ƃ��m�F���Ă��������B
+    【注意】行を継続させるために付いている、最後の「\」がすべての行に付いていることを確認してください。
 
--   �C���������W�X�g����ǂݍ��܂��܂��B
+-   修正したレジストリを読み込ませます。
 
--   SKKIEM�����X�^�[�g���܂��B
+-   SKKIEMをリスタートします。
 
 
-����ł����܂��B
+これでおしまい。
 
 
 ## License
